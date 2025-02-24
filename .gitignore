@@ -1,0 +1,69 @@
+# ASP.NET Core
+#
+# Visual Studio and ASP.NET Core specific files that should be ignored
+
+## Ignore build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# ASP.NET Scaffolding
+.scaffolding/
+
+# Visual Studio 2019/2022 auto-generated folders
+.vscode/
+.vs/
+
+# Local History for Visual Studio
+.localhistory/
+
+# Logs
+*.log
+logs/
+
+# Environment Variables
+.env
+.env.*
+
+# Azure Pipelines
+.projectname/
+
+# Rider/JetBrains specific files
+.idea/
+*.sln.iml
+
+# Resharper
+*.DotSettings.user
+
+# Package directories
+node_modules/
+bower_components/
+
+# Backup & Package Results
+*.bak
+*.swp
+*.tmp
+*.temp
+*.log
+*.obj
+
+# NPM packages
+*.node
+
+# Coverage results
+coverage/
+*.lcov
+
+
+# Docker files
+docker-compose.override.yml
+.dockerignore
+
+# Do not ignore wwwroot and its contents
+!wwwroot/
+!wwwroot/**
