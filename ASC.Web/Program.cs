@@ -4,6 +4,7 @@ using ASC.Web.Data;
 using ASC.Web.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,13 +16,16 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.Configure<ApplicationSettings>(
-builder.Configuration.GetSection("ApplicationSettings"));
-builder.Services.AddControllersWithViews();
 
-//Add application services 
-builder.Services.AddTransient<IEmailSender,AuthMessageSender>();
-builder.Services.AddTransient<ISmsSender,AuthMessageSender>();
+builder.Services.AddOptions();
+builder.Services.Configure<ApplicationSettings>(builder.Configuration.GetSection("AppSettings"));
+builder.Services.AddControllersWithViews();
+// them vao
+builder.Services.AddRazorPages();
+builder.Services.AddSingleton<IIdentitySeed, IdentitySeed>();
+//ket thuc them vao
+builder.Services.AddTransient<IEmailSender, AuthMessageSender>();
+builder.Services.AddTransient<ISmsSender, AuthMessageSender>();
 
 var app = builder.Build();
 
@@ -49,4 +53,12 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+//them vao
+using (var scope = app.Services.CreateScope())
+{
+    var storageSeed = scope.ServiceProvider.GetRequiredService<IdentitySeed>();
+    await storageSeed.Seed(scope.ServiceProvider.GetService<UserManager<IdentityUser>>(),
+        scope.ServiceProvider.GetService<RoleManager<IdentityRole>>(),
+        scope.ServiceProvider.GetService<IOptions<ApplicationSettings>>());
+}
 app.Run();
