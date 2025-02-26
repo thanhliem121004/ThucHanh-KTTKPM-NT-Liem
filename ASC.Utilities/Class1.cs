@@ -1,6 +1,7 @@
-﻿namespace ASC.Model
+﻿namespace ASC.Utilities
 {
     public class Class1
     {
+
     }
 }
