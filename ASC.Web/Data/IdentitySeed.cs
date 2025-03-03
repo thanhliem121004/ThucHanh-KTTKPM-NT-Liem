@@ -69,10 +69,12 @@ namespace ASC.Web.Data
                 await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("IsActive", "True"));
 
                 // Add Service Engineer to Engineer role
-                if (result.Succeeded)
+                if (!await roleManager.RoleExistsAsync(Roles.Engineer.ToString()))
                 {
-                    await userManager.AddToRoleAsync(user, Roles.Engineer.ToString());
+                    await roleManager.CreateAsync(new IdentityRole(Roles.Engineer.ToString()));
                 }
+
+                await userManager.AddToRoleAsync(user, Roles.Engineer.ToString());
             }
         }
     }
