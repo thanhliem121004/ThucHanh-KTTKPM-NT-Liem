@@ -41,6 +41,9 @@ builder.Services.AddTransient<ISmsSender, AuthMessageSender>();
 builder.Services.AddSingleton<IIdentitySeed, IdentitySeed>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+builder.Services.AddDistributedMemoryCache(); // Thêm dòng này
+builder.Services.AddSession(); // Thêm dòng này
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -56,6 +59,7 @@ else
 }
 
 app.UseHttpsRedirection();
+app.UseSession();
 app.UseStaticFiles();
 
 app.UseRouting();

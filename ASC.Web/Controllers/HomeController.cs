@@ -51,6 +51,7 @@ using ASC.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
+using ASC.Utilities;
 
 namespace ASC.Web.Controllers
 {
@@ -72,7 +73,15 @@ namespace ASC.Web.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Title = _settings.Value.ApplicationTitle;
+            // Set Session
+            HttpContext.Session.SetSession("Test", _settings.Value);
+
+            // Get Session
+            var settings = HttpContext.Session.GetSession<ApplicationSettings>("Test");
+
+            // Usage of IOptions
+            ViewBag.Title = settings.ApplicationTitle;
+
             return View();
         }
 
