@@ -1,12 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using ASC.Utilities
+@using ASC.Web.Data
 @inject IHttpContextAccessor UserHttpContext
-@using ASC.Utilities
+@*Lay thong tin user đăng nhập*@
+@inject IHttpContextAccessor UserHttpContext
+@*Lấy menu*@
+@inject INavigationCacheOperations navigationCache
 @{
     Layout = "_MasterLayout";
-}
-@{
-    var currentUser = User.GetCurrentUserDetails();
+    var currentUser = UserHttpContext.HttpContext.User.GetCurrentUserDetails();
 }
 <header class="secureLayout">
     <nav class="top-nav blue-grey lighten-1">
@@ -27,6 +29,7 @@
                 <a href="#!email"><span class="white-text email">@currentUser.Email</span></a>
             </div>
         </li>
+            @await Component.InvokeAsync("ASC.Web.Navigation.LeftNavigation", await navigationCache.GetNavigationCacheAsync())
         <li>
             <a class="collapsible-header" href="#!">
                 <i class="material-icons">dashboard</i>
@@ -98,6 +101,7 @@
         <form class="hide" method="post" id="logout_form" asp-area="Identity" asp-page="/Account/Logout">
             <input type="submit" value="Logout" />
         </form>
+        <form class="hide" method="post" id="resetPassword_form" asp-area="Identity" asp-page="/Account/InitiateResetPassword"></form>
     </ul>
 </header>
 
@@ -149,15 +153,15 @@
         </div>
     </div>
 </footer>
-@* @section Scripts {
-    @RenderSection("Scripts", required: false)
-} *@
 @section Scripts {
     @RenderSection("Scripts", required: false)
     <script type="text/javascript">
         $(function () {
             $('#ancrLogout').click(function () {
                 $('#logout_form').submit();
+            });
+            $('#ancrResetPassword').click(function () {
+                $('#resetPassword_form').submit();
             });
         });
     </script>
@@ -167,3 +171,6 @@
         });
     </script>
 }
+
+@RenderSection("Scripts", required: false)
+

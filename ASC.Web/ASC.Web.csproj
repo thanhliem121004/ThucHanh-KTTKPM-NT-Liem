@@ -8,8 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.11.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.12" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.3.0" />
@@ -17,6 +18,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.12" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="MimeKit" Version="4.11.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +26,13 @@
     <ProjectReference Include="..\ASC.DataAccess\ASC.DataAccess.csproj" />
     <ProjectReference Include="..\ASC.Model\ASC.Model.csproj" />
     <ProjectReference Include="..\ASC.Utilities\ASC.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\ServiceRequests\Controllers\" />
+    <Folder Include="Areas\ServiceRequests\Data\" />
+    <Folder Include="Areas\ServiceRequests\Models\" />
+    <Folder Include="Areas\ServiceRequests\Views\" />
   </ItemGroup>
 
 </Project>
