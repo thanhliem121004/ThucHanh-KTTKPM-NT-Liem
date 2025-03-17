@@ -58,7 +58,8 @@ namespace ASC.Web.Services
             // AddMyDependencyGroup
             services.AddDistributedMemoryCache();
             services.AddSingleton<INavigationCacheOperations, NavigationCacheOperations>();
-
+            services.Configure<DataProtectionTokenProviderOptions>(o =>
+            o.TokenLifespan = TimeSpan.FromHours(3)); // Tăng thời gian hết hạn lên 3 giờ
             return services;
         }
     }

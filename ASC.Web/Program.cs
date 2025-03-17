@@ -27,7 +27,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     options.User.RequireUniqueEmail = true;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
-.AddDefaultTokenProviders().AddDefaultUI();
+.AddDefaultTokenProviders()
+.AddDefaultUI();
 // -->
 builder.Services.AddScoped<DbContext, ApplicationDbContext>();
 

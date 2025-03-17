@@ -71,20 +71,17 @@ namespace ASC.Web.Areas.Identity.Pages.Account
 
         }
 
-        public IActionResult OnGet(string code = null)
+        public IActionResult OnGet(string code = null, string email = null)
         {
             if (code == null)
             {
                 return BadRequest("A code must be supplied for password reset.");
             }
-            else
-            {
-                Input = new InputModel
-                {
-                    Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
-                };
-                return Page();
-            }
+
+            var decodedCode = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+            Console.WriteLine($"Decoded Token: {decodedCode}");
+            Input = new InputModel { Code = decodedCode, Email = email };
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -97,7 +94,6 @@ namespace ASC.Web.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                // Don't reveal that the user does not exist
                 return RedirectToPage("./ResetPasswordConfirmation");
             }
 
@@ -109,6 +105,7 @@ namespace ASC.Web.Areas.Identity.Pages.Account
 
             foreach (var error in result.Errors)
             {
+                Console.WriteLine($"Error: {error.Description}");
                 ModelState.AddModelError(string.Empty, error.Description);
             }
             return Page();

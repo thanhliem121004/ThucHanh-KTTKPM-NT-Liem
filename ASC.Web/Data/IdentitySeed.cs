@@ -8,6 +8,7 @@ namespace ASC.Web.Data
 {
     public class IdentitySeed : IIdentitySeed
     {
+
         public async Task Seed(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager,
             IOptions<ApplicationSettings> options)
         {
