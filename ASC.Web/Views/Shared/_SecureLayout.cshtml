@@ -30,13 +30,13 @@
             </div>
         </li>
             @await Component.InvokeAsync("ASC.Web.Navigation.LeftNavigation", await navigationCache.GetNavigationCacheAsync())
-        <li>
+      @*  <li>
             <a class="collapsible-header" href="#!">
                 <i class="material-icons">dashboard</i>
                 Dashboard
             </a>
         </li>
-        @* <li>
+         <li>
             <ul class="collapsible collapsible-accordion">
                 <li>
                     <a class="collapsible-header">User Administration <i class="material-icons">supervisor_account</i></a>
@@ -50,7 +50,7 @@
                 </li>
             </ul>
         </li> *@
-        <li>
+        @*<li>
             <ul class="collapsible collapsible-accordion">
                 <li>
                     <a class="collapsible-header">Settings<i class="material-icons">settings</i></a>
@@ -98,6 +98,7 @@
                 </i>Logout
             </a>
         </li>
+        *@
         <form class="hide" method="post" id="logout_form" asp-area="Identity" asp-page="/Account/Logout">
             <input type="submit" value="Logout" />
         </form>
