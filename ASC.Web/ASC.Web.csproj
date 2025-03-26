@@ -29,10 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\ServiceRequests\Controllers\" />
     <Folder Include="Areas\ServiceRequests\Data\" />
     <Folder Include="Areas\ServiceRequests\Models\" />
-    <Folder Include="Areas\ServiceRequests\Views\" />
   </ItemGroup>
 
 </Project>

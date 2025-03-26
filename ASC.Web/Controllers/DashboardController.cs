@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.Extensions.Options;
 
-namespace ASC.Web.Controllers
+namespace ASC.Web.Areas.ServiceRequests.Controllers
 {
     public class DashboardController : BaseController
     {

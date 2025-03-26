@@ -47,7 +47,7 @@ namespace ASC.Web.Areas.Identity.Pages.Account
 
             await _emailSender.SendEmailAsync(userEmail, "Reset Password",
                 $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
-            return RedirectToPage("./ResetPasswordEmailConfirmation");
+            return RedirectToPage("./InitiateResetPassword");
         }
     }
 }
