@@ -6,47 +6,164 @@
     ViewData["Title"] = "Log in";
 }
 
+<style>
+    .container {
+        margin-top: 30px;
+    }
+
+    .login-container {
+        display: flex;
+        justify-content: space-between; /* Chia đều không gian giữa các phần tử */
+        align-items: flex-start; /* Căn chỉnh các phần tử lên trên */
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-form {
+        flex: 1; /* Cho form chiếm phần lớn không gian */
+        margin-right: 20px; /* Tạo khoảng cách giữa form và external login */
+    }
+
+    .external-login {
+        flex: 1; /* Cho external login chiếm phần còn lại */
+    }
+
+    .input-field label {
+        color: #9e9e9e;
+    }
+
+    .input-field input[type=email]:focus + label,
+    .input-field input[type=password]:focus + label {
+        color: #26a69a;
+    }
+
+    .input-field input[type=email]:focus,
+    .input-field input[type=password]:focus {
+        border-bottom: 1px solid #26a69a;
+        box-shadow: 0 1px 0 0 #26a69a;
+    }
+
+    .text-danger {
+        color: #f44336 !important;
+    }
+
+    .padding-left-10px {
+        padding-left: 10px;
+    }
+
+    .btn.waves-effect.waves-light {
+        background-color: #26a69a;
+    }
+
+        .btn.waves-effect.waves-light:hover {
+            background-color: #2bbbad;
+        }
+
+    .row.center {
+        margin-bottom: 0;
+    }
+
+    a {
+        color: #26a69a;
+    }
+
+        a:hover {
+            color: #2bbbad;
+        }
+
+    h6 {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .divider {
+        background-color: #ddd;
+    }
+
+    .btn.btn-default {
+        background-color: #f0f0f0;
+        color: #333;
+        border: 1px solid #ccc;
+    }
+
+        .btn.btn-default:hover {
+            background-color: #e0e0e0;
+        }
+
+    .form-horizontal p {
+        margin-bottom: 5px;
+    }
+</style>
+
 <div class="container">
     <div class="row">
         <div class="col s12 m6 offset-m3">
-            <form asp-route-returnurl="@ViewData[" ReturnUrl"]" method="post">
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input asp-for="Input.Email" type="email" class="validate">
-                        <label asp-for="Input.Email">
-                            Email
-                        </label>
-                        <span class="helper-text" data-error="wrong" data-success="right"></span>
-                    </div>
+            <div class="login-container">
+                <div class="login-form">
+                    <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input asp-for="Input.Email" type="email" class="validate">
+                                <label asp-for="Input.Email">
+                                    Email
+                                </label>
+                                <span class="helper-text" data-error="wrong" data-success="right"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input asp-for="Input.Password" type="password" class="validate">
+                                <label asp-for="Input.Password">
+                                    Password
+                                </label>
+                                <span class="helper-text" data-error="wrong" data-success="right"></span>
+                            </div>
+                        </div>
+                        <div class="row padding-left-10px">
+                            <p>
+                                <label>
+                                    <input asp-for="Input.RememberMe" type="checkbox" class="filled-in" />
+                                    <span asp-for="Input.RememberMe">@Html.DisplayNameFor(m => m.Input.RememberMe)</span>
+                                </label>
+                            </p>
+                        </div>
+                        <div class="row center">
+                            <button class="btn waves-effect waves-light" type="submit">
+                                Submit
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                        <div class="row center">
+                            <a href="/Identity/Account/ForgotPassword">Forgot your password?</a>
+                        </div>
+                    </form>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input asp-for="Input.Password" type="password" class="validate">
-                        <label asp-for="Input.Password">
-                            Password
-                        </label>
-                        <span class="helper-text" data-error="wrong" data-success="right"></span>
-                    </div>
+
+                <div class="external-login">
+                    <h6>Login using External Providers.</h6>
+                    <div class="divider"></div>
+                    @{
+                        var loginProviders = await SignInManager.GetExternalAuthenticationSchemesAsync();
+                        if (loginProviders.Count() != 0)
+                        {
+                            <form asp-area="Identity" asp-page="/Account/ExternalLogin" asproute-returnurl="@ViewData["ReturnUrl"]" method="post" class="formhorizontal">
+                                <div>
+                                    <p>
+                                        @foreach (var provider in loginProviders)
+                                        {
+                                            <button type="submit" class="btn btn-default" name="provider" value="@provider.DisplayName" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                        }
+                                    </p>
+                                </div>
+                            </form>
+                        }
+                    }
                 </div>
-                <div class="row padding-left-10px">
-                    <p>
-                        <label>
-                            <input asp-for="Input.RememberMe" type="checkbox" class="filled-in" />
-                            <span asp-for="Input.RememberMe">@Html.DisplayNameFor(m => m.Input.RememberMe)</span>
-                        </label>
-                    </p>
-                </div>
-                <div class="row center">
-                    <button class="btn waves-effect waves-light" type="submit">
-                        Submit
-                        <i class="material-icons right">send</i>
-                    </button>
-                </div>
-                <div class="row center">
-                    <a href="/Identity/Account/ForgotPassword">Forgot your password?</a>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

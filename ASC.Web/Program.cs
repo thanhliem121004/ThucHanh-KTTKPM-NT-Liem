@@ -40,6 +40,14 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddOptions();
 builder.Services.Configure<ApplicationSettings>(builder.Configuration.GetSection("AppSettings"));
 
+// Add authentication services and configure Google authentication
+builder.Services.AddAuthentication()
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"]!; // The "!" is a null-forgiving operator
+        googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!; // The "!" is a null-forgiving operator
+    });
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages();
@@ -74,6 +82,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseSession();
+
+// Enable authentication
+app.UseAuthentication();
 app.UseAuthorization();
 
 //app.MapControllerRoute(
@@ -102,5 +113,5 @@ using (var scope = app.Services.CreateScope())
 {
     var navigationCacheOperations = scope.ServiceProvider.GetRequiredService<INavigationCacheOperations>();
     await navigationCacheOperations.CreateNavigationCacheAsync();
-}    
+}
 app.Run();
